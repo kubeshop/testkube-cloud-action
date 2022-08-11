@@ -6,7 +6,7 @@ inputs:
     required: true
     default: ''
   gke-project-id:
-    description: 'GCP project ID'
+    description: 'GKE project ID'
     required: true
     default: ''
   gke-cluster-name:
@@ -18,15 +18,15 @@ inputs:
     required: true
     default: ''
   command:
-    description: 'Command'
+    description: 'Testkube Command'
     required: true
     default: 'get'
   resource:
-    description: 'Resource'
+    description: 'Testkube Resource'
     required: false
     default: 'tests'
   namespace:
-    description: 'Namespace'
+    description: 'Testkube Namespace'
     required: false
     default: 'testkube'
   api-key:
@@ -45,7 +45,6 @@ inputs:
     description: 'Standard input'
     required: false
     default: ''
-output:
 runs:
   using: "composite"
   steps:
