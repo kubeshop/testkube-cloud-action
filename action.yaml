@@ -1,0 +1,72 @@
+name: 'Testkube GKE CLI'
+description: 'Testkube command running directly on GKE cluster'
+inputs:
+  gke-sa-key:
+    description: 'GKE Service Account Key'
+    required: true
+    default: ''
+  gke-project-id:
+    description: 'GCP project ID'
+    required: true
+    default: ''
+  gke-cluster-name:
+    description: 'GKE cluster name'
+    required: true
+    default: ''
+  gke-zone:
+    description: 'GKE cluster zone'
+    required: true
+    default: ''
+  command:
+    description: 'Command'
+    required: true
+    default: 'get'
+  resource:
+    description: 'Resource'
+    required: false
+    default: 'tests'
+  namespace:
+    description: 'Namespace'
+    required: false
+    default: 'testkube'
+  api-key:
+    description: 'API key'
+    required: false
+    default: ''
+  api-uri:
+    description: 'API uri'
+    required: false
+    default: ''
+  parameters:
+    description: 'Parameters'
+    required: false
+    default: ''
+  stdin:
+    description: 'Standard input'
+    required: false
+    default: ''
+output:
+runs:
+  using: "composite"
+  steps:
+    - name: 'gcloud login'
+      uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      with:
+        service_account_key: ${{ inputs.gke-sa-key }}
+        project_id: ${{ inputs.gke-project-id }}
+    - name: 'Set GKE credentials'
+      uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+      with:
+        cluster_name: ${{ inputs.gke-cluster-name }}
+        location: ${{ inputs.gke-zone }}
+        credentials: ${{ inputs.gke-sa-key }}
+    - name: Run Testkube
+      uses: kubeshop/testkube-docker-action@v1
+      with:
+        command: ${{ inputs.command }}
+        resource: ${{ inputs.resource }}
+        namespace: ${{ inputs.namespace }}
+        api-key: ${{ inputs.api-key }}
+        api-url: ${{ inputs.api-url }}
+        parameters: ${{ input.parameters }}
+        stdin: ${{ input.stdin }}
