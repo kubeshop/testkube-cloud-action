@@ -1,5 +1,5 @@
 name: 'Testkube GKE CLI'
-description: 'Testkube command running directly on GKE cluster'
+description: 'This action executes a Testkube command directly on the configured GKE cluster'
 inputs:
   gke-sa-key:
     description: 'GKE Service Account Key'
