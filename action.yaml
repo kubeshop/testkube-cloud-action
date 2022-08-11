@@ -67,6 +67,6 @@ runs:
         resource: ${{ inputs.resource }}
         namespace: ${{ inputs.namespace }}
         api-key: ${{ inputs.api-key }}
-        api-url: ${{ inputs.api-url }}
-        parameters: ${{ input.parameters }}
-        stdin: ${{ input.stdin }}
+        api-uri: ${{ inputs.api-uri }}
+        parameters: ${{ inputs.parameters }}
+        stdin: ${{ inputs.stdin }}
