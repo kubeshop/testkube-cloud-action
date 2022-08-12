@@ -7,7 +7,7 @@ As of now, only Google Cloud Platform's GKE is supported.
 
 | Name | Type | Description | Default Value |
 | ---- | ---- | ----------- | ------------- |
-| provicer | Required | Cloud provider | "gcp" |
+| provider | Required | Cloud provider | "gcp" |
 | sa-key | Required | Service Account Key | "" |
 | project | Required | Project ID | "" |
 | cluster-name | Required | Cluster name | "" |
@@ -42,5 +42,5 @@ This GitHub action is a composite action. To see details on the different used a
           command: 'run'
           resource: 'test'
           namespace: 'testkube'
-          parameters: 'successful-soapui-test'
+          parameters: 'successful-soapui-test -f'
 ```
