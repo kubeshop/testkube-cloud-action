@@ -1,15 +1,17 @@
-# Testkube GKE GitHub Action
+# Testkube Cloud GitHub Action
 
-GitHub action to run Testkube commands on a GKE cluster equipped with Testkube
+GitHub action to run Testkube commands on a managed Kubernetes cluster equipped with Testkube.
+As of now, only Google Cloud Platform's GKE is supported.
 
 ## Inputs
 
 | Name | Type | Description | Default Value |
 | ---- | ---- | ----------- | ------------- |
-| gke-sa-key | Required | GKE Service Account Key | "" |
-| gke-project-id | Required | GKE project ID | "" |
-| gke-cluster-name | Required | GKE cluster name | "" |
-| gke-zone | Required | GKE cluster zone | "" |
+| provicer | Required | Cloud provider | "gcp" |
+| sa-key | Required | Service Account Key | "" |
+| project | Required | Project ID | "" |
+| cluster-name | Required | Cluster name | "" |
+| zone | Required | Cluster zone | "" |
 | command | Required | Testkube Command | "get" |
 | resource | Optional | Testkube Resource | "tests" |
 | namespace | Optional | Testkube Namespace | "testkube" |
@@ -30,12 +32,13 @@ This GitHub action is a composite action. To see details on the different used a
 
 ```sh
       - name: Run Testkube test
-        uses: kubeshop/testkube-gke-action@v1
+        uses: kubeshop/testkube-cloud-action@v1
         with:
-          gke-sa-key: ${{ secrets.GKE_SA_KEY }}
-          gke-project-id: ${{ secrets.GKE_PROJECT }}
-          gke-cluster-name: ${{ secrets.GKE_CLUSTER_NAME_DEV }}
-          gke-zone: ${{ secrets.GKE_ZONE_DEV }}
+          provider: 'gcp'
+          sa-key: ${{ secrets.GKE_SA_KEY }}
+          project: ${{ secrets.GKE_PROJECT }}
+          cluster-name: ${{ secrets.GKE_CLUSTER_NAME_DEV }}
+          zone: ${{ secrets.GKE_ZONE_DEV }}
           command: 'run'
           resource: 'test'
           namespace: 'testkube'
