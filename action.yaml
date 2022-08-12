@@ -1,32 +1,36 @@
-name: 'Testkube GKE CLI'
-description: 'This action executes a Testkube command directly on the configured GKE cluster'
+name: 'Testkube Cloud CLI'
+description: 'Testkube command running directly on a managed cluster in a Cloud Provider'
 inputs:
-  gke-sa-key:
-    description: 'GKE Service Account Key'
+  provider:
+    description: 'Cloud provider'
+    required: true
+    default: 'gcp'
+  sa-key:
+    description: 'Service Account Key'
     required: true
     default: ''
-  gke-project-id:
-    description: 'GKE project ID'
+  project:
+    description: 'Project ID'
     required: true
     default: ''
-  gke-cluster-name:
-    description: 'GKE cluster name'
+  cluster-name:
+    description: 'Cluster name'
     required: true
     default: ''
-  gke-zone:
-    description: 'GKE cluster zone'
+  zone:
+    description: 'Location'
     required: true
     default: ''
   command:
-    description: 'Testkube Command'
+    description: 'Command'
     required: true
     default: 'get'
   resource:
-    description: 'Testkube Resource'
+    description: 'Resource'
     required: false
     default: 'tests'
   namespace:
-    description: 'Testkube Namespace'
+    description: 'Namespace'
     required: false
     default: 'testkube'
   api-key:
@@ -49,16 +53,18 @@ runs:
   using: "composite"
   steps:
     - name: 'gcloud login'
+      if: ${{ inputs.provider }} == 'gcp'
       uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
       with:
-        service_account_key: ${{ inputs.gke-sa-key }}
-        project_id: ${{ inputs.gke-project-id }}
+        service_account_key: ${{ inputs.sa-key }}
+        project_id: ${{ inputs.project }}
     - name: 'Set GKE credentials'
+      if: ${{ inputs.provider }} == 'gcp'
       uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
       with:
-        cluster_name: ${{ inputs.gke-cluster-name }}
-        location: ${{ inputs.gke-zone }}
-        credentials: ${{ inputs.gke-sa-key }}
+        cluster_name: ${{ inputs.cluster-name }}
+        location: ${{ inputs.zone }}
+        credentials: ${{ inputs.sa-key }}
     - name: Run Testkube
       uses: kubeshop/testkube-docker-action@v1
       with:
