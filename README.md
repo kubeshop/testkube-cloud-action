@@ -1,5 +1,5 @@
 # DEPRECATED
-Please use new [Testkube GH action](https://github.com/marketplace/actions/install-testkube) to build you pipeline more efficiently. 
+Please use new [Testkube GH action](https://github.com/marketplace/actions/install-testkube) to build your pipeline more efficiently. 
 # Testkube Cloud GitHub Action
 
 GitHub action to run Testkube commands on a managed Kubernetes cluster equipped with Testkube.
